@@ -9,6 +9,8 @@ or INCONCLUSIVE) against thresholds you set. The question it answers:
 
 > Can this agent produce the same quality for less money and less time?
 
+**[Try the live demo](https://agentevals-o7cmqmhhycu28cappkrxggb.streamlit.app/)**: no install, no sign-up, runs on a free mock model.
+
 ![Experiment: baseline vs candidate with verdict](docs/images/experiment.png)
 
 ## What it does
@@ -59,9 +61,14 @@ Groq or Anthropic key to `.env` to evaluate real models.
 
 ## Online demo
 
+**Live: [https://agentevals-o7cmqmhhycu28cappkrxggb.streamlit.app/](https://agentevals-o7cmqmhhycu28cappkrxggb.streamlit.app/)**
+
 A lighter version runs on Streamlit: the same engine, a private temporary workspace per
 visitor, the free mock model by default, and your own API key if you want to try a real
-model. See [streamlit_app/](streamlit_app/README.md). (Public link added once deployed.)
+model (kept only in your browser session, never stored). The free hosting puts idle apps to
+sleep, so the first visit after a quiet spell may ask you to wake it up. For the full
+platform (dashboard, API, worker, database), follow the quick start above. See
+[streamlit_app/](streamlit_app/README.md).
 
 ## Documentation
 

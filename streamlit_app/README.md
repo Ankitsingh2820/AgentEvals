@@ -1,5 +1,7 @@
 # AgentEval: online demo (Streamlit)
 
+**Live: https://agentevals-o7cmqmhhycu28cappkrxggb.streamlit.app/**
+
 A lightweight, public version of AgentEval. It runs the **real engine** (agent loop,
 evaluators, LLM judge, experiment statistics, costs) in one Streamlit app, without the API
 server, PostgreSQL, Redis or the worker. For the full platform, see the
