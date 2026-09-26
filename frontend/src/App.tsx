@@ -7,6 +7,7 @@ import { Loading, Page } from './components/ui'
 // Pages load on demand, so the charting library is fetched only by pages that chart.
 const Overview = lazy(() => import('./pages/Overview').then((m) => ({ default: m.Overview })))
 const Agents = lazy(() => import('./pages/Agents').then((m) => ({ default: m.Agents })))
+const AgentNew = lazy(() => import('./pages/AgentNew').then((m) => ({ default: m.AgentNew })))
 const AgentDetail = lazy(() => import('./pages/AgentDetail').then((m) => ({ default: m.AgentDetail })))
 const RunDetail = lazy(() => import('./pages/RunDetail').then((m) => ({ default: m.RunDetail })))
 const Evaluations = lazy(() => import('./pages/Evaluations').then((m) => ({ default: m.Evaluations })))
@@ -23,6 +24,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/agents" element={<Agents />} />
+              <Route path="/agents/new" element={<AgentNew />} />
               <Route path="/agents/:id" element={<AgentDetail />} />
               <Route path="/runs/:id" element={<RunDetail />} />
               <Route path="/evaluations" element={<Evaluations />} />

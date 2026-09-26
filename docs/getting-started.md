@@ -89,6 +89,7 @@ A short tour:
 | Page | What to look at |
 |---|---|
 | **Overview** | Run counts, cost, latency and quality, with trend charts. Any chart can switch to a table. |
+| **Agents** → **Create agent** | Make your own agent: pick a provider and model, write the prompt, tick tools. Then use **Run this agent** on its page. |
 | **Agents** → *Company Research Agent (demo)* | Its two versions, recent runs, and its evaluation. Click a run ID to see every step the agent took: model calls, tool calls, tokens, cost, timing. |
 | **Agents** → *Long-prompt Agent (demo)* | Click **Analyze runs**: it recommends prompt caching, with the evidence. **Apply as candidate…** creates a new version and an experiment to test it. |
 | **Experiments** → *Cheaper model for the research agent* | The verdict (PASS / FAIL / INCONCLUSIVE), the baseline vs candidate table with confidence intervals, what changed, and per-case results. |

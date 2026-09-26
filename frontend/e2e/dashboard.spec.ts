@@ -114,3 +114,43 @@ test('optimization loop through the dashboard', async ({ page }) => {
   await page.getByRole('button', { name: 'Sign out' }).click()
   await expect(page.getByRole('heading', { name: 'Sign in to AgentEval' })).toBeVisible()
 })
+
+// Everything above needed the API for setup. This one needs nothing but the dashboard:
+// create an agent with the form, run it, read the trace. (Mock provider: free, offline.)
+test('create and run an agent entirely from the dashboard', async ({ page }) => {
+  const name = `E2E form agent ${stamp}`
+  await page.goto('/')
+  await page.getByLabel('API key').fill(KEY)
+  await page.getByRole('button', { name: 'Sign in' }).click()
+  await page.getByRole('link', { name: 'Agents' }).click()
+  await page.getByRole('button', { name: 'Create agent' }).click()
+  await expect(page.getByRole('heading', { name: 'Create agent' })).toBeVisible()
+
+  // Validation: an empty name is refused before anything is sent.
+  await page.getByRole('button', { name: 'Create agent' }).click()
+  await expect(page.getByRole('alert')).toContainText('Give the agent a name.')
+
+  await page.getByLabel('Name', { exact: true }).fill(name)
+  await expect(page.getByLabel('Provider')).toHaveValue('mock')
+  await expect(page.getByLabel(/company_lookup/)).toBeChecked() // default tool
+  await page.getByRole('button', { name: 'Create agent' }).click()
+
+  // Lands on the new agent's page, with the run box.
+  await expect(page.getByRole('heading', { name })).toBeVisible()
+  await expect(page.getByText('Runs the latest version (v1, mock/mock-model)')).toBeVisible()
+  await page.getByLabel('Agent input').fill('Acme Corp')
+  await page.getByRole('button', { name: 'Run', exact: true }).click()
+
+  // The run's trace: it used the tool and produced an answer about the company.
+  await expect(page.getByRole('heading', { name: /^Run / })).toBeVisible()
+  await expect(page.getByText('succeeded').first()).toBeVisible()
+  await expect(page.getByRole('listitem').filter({ hasText: 'tool · company_lookup' })).toHaveCount(1)
+  await expect(page.locator('section', { hasText: 'Final output' })).toContainText('Industrial Automation')
+
+  // Creating the same name again shows the server's message and stays on the form.
+  await page.getByRole('link', { name: 'Agents' }).click()
+  await page.getByRole('button', { name: 'Create agent' }).click()
+  await page.getByLabel('Name', { exact: true }).fill(name)
+  await page.getByRole('button', { name: 'Create agent' }).click()
+  await expect(page.getByRole('alert')).toContainText('already exists')
+})

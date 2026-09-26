@@ -327,6 +327,21 @@ export interface Evaluator {
   type: string
 }
 
+export interface ToolInfo {
+  name: string
+  description: string
+}
+
+export interface ProviderModels {
+  provider: string
+  models: string[]
+}
+
+export interface ModelPrice {
+  provider: string
+  model: string
+}
+
 export class ApiError extends Error {
   status: number
   constructor(status: number, message: string) {

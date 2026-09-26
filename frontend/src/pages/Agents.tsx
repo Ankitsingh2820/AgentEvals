@@ -1,12 +1,18 @@
+import { useNavigate } from 'react-router-dom'
 import type { Agent } from '../api'
-import { A, Card, ErrorBox, Loading, Page, Table } from '../components/ui'
+import { A, Button, Card, ErrorBox, Loading, Page, Table } from '../components/ui'
 import { dateTime, enabledOptions } from '../format'
 import { useApi } from '../useApi'
 
 export function Agents() {
   const { data, error } = useApi<Agent[]>('/agents')
+  const navigate = useNavigate()
   return (
-    <Page title="Agents" subtitle="Each configuration change creates a new immutable version.">
+    <Page
+      title="Agents"
+      subtitle="Each configuration change creates a new immutable version."
+      actions={<Button onClick={() => navigate('/agents/new')}>Create agent</Button>}
+    >
       {error && <ErrorBox message={error} />}
       {!data && !error && <Loading />}
       {data && (
@@ -14,7 +20,7 @@ export function Agents() {
           <Table
             rows={data}
             rowKey={(a) => a.id}
-            empty="No agents yet. Create one with POST /agents."
+            empty="No agents yet. Click Create agent to make your first one."
             columns={[
               { header: 'Agent', cell: (a) => <A to={`/agents/${a.id}`}>{a.name}</A> },
               { header: 'Version', align: 'right', cell: (a) => `v${a.latest_version.version}` },

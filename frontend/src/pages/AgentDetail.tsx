@@ -37,6 +37,8 @@ export function AgentDetail() {
         </TileRow>
       )}
 
+      <RunPanel agent={a} />
+
       <Card title="Versions" subtitle="Immutable: every run records the version it used.">
         <Table
           rows={[...(versions.data ?? [])].reverse()}
@@ -256,5 +258,46 @@ function ApplyForm({ rec, report }: { rec: Recommendation; report: OptimizationR
         {datasetId ? 'Create version + experiment' : 'Create version'}
       </Button>
     </div>
+  )
+}
+
+function RunPanel({ agent }: { agent: Agent }) {
+  const navigate = useNavigate()
+  const [input, setInput] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const v = agent.latest_version
+
+  async function run(e: React.FormEvent) {
+    e.preventDefault()
+    setBusy(true)
+    setError(null)
+    try {
+      const r = await api.post<Run>('/runs', { agent_id: agent.id, input: input.trim() })
+      navigate(`/runs/${r.id}`)
+    } catch (err) {
+      setError((err as Error).message)
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Card
+      title="Run this agent"
+      subtitle={`Runs the latest version (v${v.version}, ${v.provider}/${v.model}) once and opens its trace.${v.provider === 'mock' ? '' : ' This makes a real call billed to your provider account.'}`}
+    >
+      <form onSubmit={run} className="flex flex-wrap items-start gap-2">
+        <input
+          aria-label="Agent input"
+          className="min-w-64 flex-1 rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink"
+          placeholder="Input for the agent, e.g. Acme Corp"
+          value={input}
+          maxLength={200000}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <Button type="submit" disabled={busy || !input.trim()}>{busy ? 'Running…' : 'Run'}</Button>
+      </form>
+      {error && <div className="mt-3"><ErrorBox message={error} /></div>}
+    </Card>
   )
 }

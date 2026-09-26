@@ -15,6 +15,8 @@ or INCONCLUSIVE) against thresholds you set. The question it answers:
 
 ## What it does
 
+- **Create and run agents from the dashboard.** A form for the provider, model (loaded from
+  your key), prompt and tools, and a run box on each agent's page.
 - **Traces every run.** Each LLM call and tool call, with tokens, estimated cost, latency
   and a step timeline. Mirrored to OpenTelemetry.
 - **Evaluates quality.** Rule-based checks (required text, regex, JSON schema, tool usage)
@@ -121,7 +123,7 @@ docs/              guides and design documents
 
 ```bash
 cd backend && uv sync && uv run pytest          # 167 tests, no database or API keys needed
-cd frontend && npm install && npm test          # 16 unit tests
+cd frontend && npm install && npm test          # 22 unit tests
 cd streamlit_app && pip install -r requirements.txt pytest && python -m pytest tests   # 7 demo tests
 ```
 

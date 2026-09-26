@@ -17,10 +17,10 @@ How to evaluate and optimize your own agents with AgentEval. Start with
 
 ## Where to do things
 
-- **Dashboard** (http://localhost:3000): view everything; analyze an agent, apply a
-  recommendation, run and reproduce experiments.
-- **API docs** (http://localhost:8000/docs): create agents, datasets, evaluators,
-  evaluations and experiments. Every request below can be sent from this page.
+- **Dashboard** (http://localhost:3000): create and run agents, view everything, analyze
+  an agent, apply a recommendation, run and reproduce experiments.
+- **API docs** (http://localhost:8000/docs): everything else for now (datasets,
+  evaluators, evaluations, experiments). Every request below can be sent from this page.
 
 ### Using the API docs page
 
@@ -49,7 +49,21 @@ costs nothing. An error here means the key is missing or wrong.
 
 ## 2. Create an agent
 
-**POST /agents**
+**In the dashboard:** open **Agents** and click **Create agent**.
+
+![The Create agent form](images/create-agent.png)
+
+- **Provider:** `Groq`, `OpenAI`, `Anthropic (Claude)`, or `Mock` (free, offline, fake
+  answers). Real providers use the key from your `.env`.
+- **Model:** for a real provider the form loads the models your key can use (a free call)
+  and lists priced models first. It also tells you whether a price is on file. If the key
+  isn't set, it says so and you can still type a model name.
+- **Tools:** tick the tools the agent may call. `company_lookup` is pre-ticked because the
+  example dataset needs it.
+
+Click **Create agent**; you land on the new agent's page.
+
+**Or with the API:** **POST /agents**
 
 ```json
 {
@@ -72,10 +86,13 @@ To change the agent later, send the full new configuration to
 
 ## 3. Run it
 
-**POST /runs** with `{"agent_id": "<id>", "input": "Acme Corp"}`
+**In the dashboard:** on the agent's page, type an input (for example `Acme Corp`) in the
+**Run this agent** box and click **Run**. It opens the run's trace: the answer, every step
+with timing, tokens and cost, and the tool call's arguments and result. Real providers
+make a real call, billed to your provider account.
 
-The response shows the answer (`final_output`), `status`, tokens, cost and latency. In the
-dashboard, open **Agents** → your agent → the run to see the step-by-step timeline.
+**Or with the API:** **POST /runs** with `{"agent_id": "<id>", "input": "Acme Corp"}`. The
+response shows the answer (`final_output`), `status`, tokens, cost and latency.
 
 ## 4. Create a dataset
 
