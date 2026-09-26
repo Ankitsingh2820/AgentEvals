@@ -1,0 +1,13 @@
+# Streamlit Community Cloud installs this file. The demo imports the AgentEval engine from
+# ../backend directly, so it needs the engine's runtime libraries, but not the API server,
+# PostgreSQL, Redis or Celery.
+streamlit>=1.40
+pandas>=2.2
+fastapi>=0.141
+pydantic>=2.8
+pydantic-settings>=2.4
+sqlalchemy>=2.0.30
+jsonschema>=4.23
+anthropic>=1.8,<2
+openai>=1.60
+opentelemetry-api>=1.30

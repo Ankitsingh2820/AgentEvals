@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Acme Corp",
+    "description": "Manufactures industrial automation equipment and sells a SaaS fleet-monitoring platform.",
+    "industry": "Industrial Automation",
+    "employees": 1200,
+    "headquarters": "Denver, USA",
+    "founded": 1998
+  },
+  {
+    "name": "Globex Analytics",
+    "description": "Provides data warehousing and BI consulting for mid-market retailers.",
+    "industry": "Data & Analytics Services",
+    "employees": 340,
+    "headquarters": "Austin, USA",
+    "founded": 2012
+  },
+  {
+    "name": "Initech Health",
+    "description": "Builds patient-scheduling software for outpatient clinics.",
+    "industry": "Healthcare Software",
+    "employees": 85,
+    "headquarters": "Toronto, Canada",
+    "founded": 2019
+  },
+  {
+    "name": "Umbrella Logistics",
+    "description": "Operates freight brokerage and last-mile delivery networks.",
+    "industry": "Logistics",
+    "employees": 5400,
+    "headquarters": "Rotterdam, Netherlands",
+    "founded": 1987
+  }
+]

@@ -1,0 +1,209 @@
+{
+  "_comment": "Initial price list. Append-only: to change a price, add an entry with a later effective_date. Anthropic prices are list prices (USD per million tokens) as of 2026-06-24; cache write = 5-minute-TTL write price. Verify against https://www.anthropic.com/pricing before relying on them. OpenAI and Groq entries (2026-09-26) come from the official pricing pages named in each entry's source; neither provider charges for cache writes.",
+  "models": [
+    {
+      "provider": "anthropic",
+      "model": "claude-fable-5-1",
+      "input": "10",
+      "output": "50",
+      "cache_write": "12.5",
+      "cache_read": "0.25",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-5-5",
+      "input": "4",
+      "output": "20",
+      "cache_write": "5",
+      "cache_read": "0.20",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-5",
+      "input": "5",
+      "output": "25",
+      "cache_write": "6.25",
+      "cache_read": "0.50",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-8",
+      "input": "5",
+      "output": "25",
+      "cache_write": "6.25",
+      "cache_read": "0.50",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "input": "2",
+      "output": "10",
+      "cache_write": "2.5",
+      "cache_read": "0.20",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "input": "3",
+      "output": "15",
+      "cache_write": "3.75",
+      "cache_read": "0.30",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "input": "1",
+      "output": "5",
+      "cache_write": "1.25",
+      "cache_read": "0.10",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "provider": "mock",
+      "model": "mock-model",
+      "input": "1",
+      "output": "2",
+      "cache_write": null,
+      "cache_read": null,
+      "effective_date": "2026-01-01",
+      "source": "Fictional price so offline mock runs exercise the cost pipeline."
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "input": "2.00",
+      "output": "8.00",
+      "cache_write": null,
+      "cache_read": "0.50",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4.1-mini",
+      "input": "0.40",
+      "output": "1.60",
+      "cache_write": null,
+      "cache_read": "0.10",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4.1-nano",
+      "input": "0.10",
+      "output": "0.40",
+      "cache_write": null,
+      "cache_read": "0.025",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "input": "2.50",
+      "output": "10.00",
+      "cache_write": null,
+      "cache_read": "1.25",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "input": "0.15",
+      "output": "0.60",
+      "cache_write": null,
+      "cache_read": "0.075",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5",
+      "input": "1.25",
+      "output": "10.00",
+      "cache_write": null,
+      "cache_read": "0.125",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5-mini",
+      "input": "0.25",
+      "output": "2.00",
+      "cache_write": null,
+      "cache_read": "0.025",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5-nano",
+      "input": "0.05",
+      "output": "0.40",
+      "cache_write": null,
+      "cache_read": "0.005",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5.1",
+      "input": "1.25",
+      "output": "10.00",
+      "cache_write": null,
+      "cache_read": "0.125",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5.2",
+      "input": "1.75",
+      "output": "14.00",
+      "cache_write": null,
+      "cache_read": "0.175",
+      "effective_date": "2026-09-26",
+      "source": "OpenAI standard pricing, developers.openai.com/api/docs/pricing, retrieved 2026-09-26"
+    },
+    {
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "input": "0.075",
+      "output": "0.30",
+      "cache_write": null,
+      "cache_read": "0.0375",
+      "effective_date": "2026-09-26",
+      "source": "Groq model pricing, console.groq.com/docs/models; cached input = 50% of input per console.groq.com/docs/prompt-caching; retrieved 2026-09-26"
+    },
+    {
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "input": "0.15",
+      "output": "0.60",
+      "cache_write": null,
+      "cache_read": "0.075",
+      "effective_date": "2026-09-26",
+      "source": "Groq model pricing, console.groq.com/docs/models; cached input = 50% of input per console.groq.com/docs/prompt-caching; retrieved 2026-09-26"
+    },
+    {
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "input": "0.80",
+      "output": "4.00",
+      "cache_write": null,
+      "cache_read": null,
+      "effective_date": "2026-09-26",
+      "source": "Groq model pricing (preview model, no prompt caching), console.groq.com/docs/models, retrieved 2026-09-26"
+    }
+  ],
+  "tools": []
+}

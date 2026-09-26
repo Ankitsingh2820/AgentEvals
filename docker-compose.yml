@@ -1,0 +1,92 @@
+# Local stack: PostgreSQL, Redis, API, worker, dashboard.
+#   docker compose up --build
+#   docker compose --profile observability up --build    # + Jaeger for OpenTelemetry traces
+#
+# Configuration comes from ./.env (see .env.example). Secrets are never committed.
+
+x-backend-env: &backend-env
+  AGENTEVAL_DATABASE_URL: postgresql+psycopg://agenteval:agenteval@db:5432/agenteval
+  AGENTEVAL_REDIS_URL: redis://redis:6379/0
+  AGENTEVAL_TASK_BACKEND: celery
+  # Crash recovery: Redis redelivers a dead worker's task after the visibility timeout;
+  # the lease (renewed after every case) stops a duplicate from running alongside it.
+  AGENTEVAL_TASK_VISIBILITY_TIMEOUT_SECONDS: ${AGENTEVAL_TASK_VISIBILITY_TIMEOUT_SECONDS:-900}
+  AGENTEVAL_TASK_LEASE_SECONDS: ${AGENTEVAL_TASK_LEASE_SECONDS:-600}
+  AGENTEVAL_TASK_RECOVERY_INTERVAL_SECONDS: ${AGENTEVAL_TASK_RECOVERY_INTERVAL_SECONDS:-30}
+  AGENTEVAL_OTEL_EXPORTER_ENDPOINT: ${AGENTEVAL_OTEL_EXPORTER_ENDPOINT:-}
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+  GROQ_API_KEY: ${GROQ_API_KEY:-}
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: agenteval
+      POSTGRES_PASSWORD: agenteval
+      POSTGRES_DB: agenteval
+    ports:
+      - "${AGENTEVAL_DB_PORT:-5433}:5432"  # 5433 on the host, to avoid clashing with a local PostgreSQL
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agenteval"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: ./backend
+    environment:
+      <<: *backend-env
+      # Optional: registered (hashed) on first start if no key exists yet.
+      AGENTEVAL_BOOTSTRAP_API_KEY: ${AGENTEVAL_BOOTSTRAP_API_KEY:-}
+      AGENTEVAL_SERVICE_NAME: agenteval-api
+      AGENTEVAL_RATE_LIMIT_PER_MINUTE: ${AGENTEVAL_RATE_LIMIT_PER_MINUTE:-120}
+      AGENTEVAL_EXECUTE_RATE_LIMIT_PER_MINUTE: ${AGENTEVAL_EXECUTE_RATE_LIMIT_PER_MINUTE:-20}
+    ports:
+      - "${AGENTEVAL_API_PORT:-8000}:8000"  # API + interactive docs at /docs
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build: ./backend
+    command: ["celery", "-A", "app.worker", "worker", "--loglevel=INFO", "--concurrency=2"]
+    environment:
+      <<: *backend-env
+      AGENTEVAL_SERVICE_NAME: agenteval-worker
+    depends_on:
+      api:
+        condition: service_started  # the API container applies migrations
+      redis:
+        condition: service_healthy
+
+  web:
+    build: ./frontend
+    ports:
+      - "${AGENTEVAL_WEB_PORT:-3000}:80"  # dashboard at http://localhost:3000
+    depends_on:
+      - api
+
+  jaeger:
+    profiles: ["observability"]
+    image: jaegertracing/all-in-one:latest
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "16686:16686"  # trace UI at http://localhost:16686
+      - "4318:4318"    # OTLP/HTTP
+
+volumes:
+  pgdata:
