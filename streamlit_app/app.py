@@ -11,7 +11,7 @@ import engine as ae
 import pandas as pd
 import streamlit as st
 
-REPO_URL = "https://github.com/<your-username>/agenteval"  # set when the repo is public
+REPO_URL = "https://github.com/Ankitsingh2820/AgentEvals"
 
 st.set_page_config(page_title="AgentEval demo", layout="wide")
 

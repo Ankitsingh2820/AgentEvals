@@ -43,7 +43,7 @@ or INCONCLUSIVE) against thresholds you set. The question it answers:
 You need **Docker Desktop** and **Git**. No AI API keys are needed for the demo.
 
 ```bash
-git clone <repository-url> agenteval
+git clone https://github.com/Ankitsingh2820/AgentEvals.git agenteval
 cd agenteval
 cp .env.example .env
 docker compose up -d --build

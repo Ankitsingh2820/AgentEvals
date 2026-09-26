@@ -17,7 +17,7 @@ in PowerShell (Windows), Terminal (macOS) and any Linux shell.
 ## 2. Download and configure
 
 ```bash
-git clone <repository-url> agenteval
+git clone https://github.com/Ankitsingh2820/AgentEvals.git agenteval
 cd agenteval
 cp .env.example .env
 ```
